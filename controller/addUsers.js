@@ -1,31 +1,29 @@
-const userModel = require("../models/userModel")
+const userCount = require("../controller/userCount");
+
 
 const addUsers = async (req, res) => {
+    const user_limit = 450;
     const { firstName, lastName, email, contact } = req.body;
-      
-    try {
-      const user = new userModel({
-        firstName, lastName, email, contact: firstName, lastName, email, contact
-      });
-      user.save()
-      // .then((status) => {
-      //   console.log("status", status);
-      // }).catch(err=>{
-      //     console.log(err)
-      // });
-      // dataCount++ ;
-      // if(dataCount >=5){
-      //   res.status(403).json({message: "Data limit reached"})
-      // }else{
-      //   res.status(200).json(user);
+    const users = await userCount()
 
-      // }
-      // console.log("getting data", user);
-    } catch (err) {
-      res.status(500).json({ err: "internal server error"});
-      console.log(err)
-    }
+    console.log("Number of users are",users)
+
+      if(users < user_limit){
+        try {
+          const user = new userModel({
+            firstName, lastName, email, contact: firstName, lastName, email, contact
+          });
+          user.save()
+          res.status(200).json(user)
+        } catch (err) {
+          res.status(500).json({ err: "internal server error"});
+          console.log(err)
+        }
+      }else{
+          res.status(404).json({message : "User Limit reached. Cannot add"})
+      }
+
   };
- 
+  
 
-  module.exports = addUsers
+  module.exports = addUsers 
