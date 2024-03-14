@@ -8,9 +8,18 @@ app.use(bodyparser.json())
 
 const routes = require("./routes/routes")
 // console.log(csrfProtection())
+app.use(cors({
+    origin : ["registration-form-pg7q9nbs2-adarsha-pathaks-projects.vercel.app"],
+    methods : ["POST", "GET"],
+    credentials : true
+}))
 
 app.use(express.static('views'));
 app.use("/", routes)
+
+app.get("/", (req, res){
+    res.json("Hello world")
+})
 
 mongoose.connect("mongodb://127.0.0.1:27017/Users").then((status)=>{
     console.log("Database connected")
