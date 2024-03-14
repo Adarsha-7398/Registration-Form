@@ -6,7 +6,7 @@ const port = 3000
 const bodyparser = require('body-parser')
 app.use(bodyparser.json())
 
-const routes = require("./routes/index")
+const routes = require("./routes/routes")
 // console.log(csrfProtection())
 
 app.use(express.static('views'));
