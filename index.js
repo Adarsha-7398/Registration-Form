@@ -8,11 +8,11 @@ app.use(bodyparser.json())
 
 const routes = require("./routes/routes")
 // console.log(csrfProtection())
-app.use(cors({
-    origin : ["https://registration-form-frontend.vercel.app"],
-    methods : ["POST", "GET"],
-    credentials : true
-}))
+// app.use(cors({
+//     origin : ["https://registration-form-frontend.vercel.app"],
+//     methods : ["POST", "GET"],
+//     credentials : true
+// }))
 
 app.use(express.static('views'));
 app.use("/", routes)
