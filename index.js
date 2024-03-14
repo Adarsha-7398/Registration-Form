@@ -18,3 +18,6 @@ mongoose.connect("mongodb://127.0.0.1:27017/Users").then((status)=>{
 }).catch((error)=>{
     console.log("Database not connected", error)
 })
+
+
+module.exports = app
