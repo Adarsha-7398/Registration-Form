@@ -11,7 +11,7 @@ const verifyRazorpayPayment = require("../controller/verifyRazorpayPayment")
 
 // Users Router
 router.post("/addUsers", authenticateUser, addUsers);
-router.get("/getUsers", authenticateUser , getUsers);
+router.get("/getUsers" , getUsers);
 router.delete("/deleteUsers/:id", authenticateUser, deleteUsers);
 router.put("/updateUsers/:id", authenticateUser, updateUsers);
 
