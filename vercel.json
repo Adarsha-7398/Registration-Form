@@ -9,5 +9,11 @@
             "src": "/(.*)",
             "dest": "/"
         }
-    ]
+    ],
+    "functions": {
+          "default": {
+            "load": { "maxDuration": 30 }
+          }
+        }
+      
 }
