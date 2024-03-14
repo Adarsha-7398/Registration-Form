@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Razorpay Integration</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  </head>
+  <body>
+    <h1>Buy A Tea Bag</h1>
+    <input type="text" id="product">
+    <br><br>
+    <input type="number" id="price">
+    <br><br>
+    <button onclick="openRazorpayModal()">Pay with Razorpay</button>
+
+    <script>
+      function openRazorpayModal() {
+        const description = document.getElementById("product").value;
+        const price = document.getElementById("price").value;
+        fetch("/createRazorpayOrder", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((order) => {
+            const options = {
+              key: "rzp_test_QhUPRK6Lamuxrr",
+              amount: price,
+              currency: order.currency,
+              name: "Adarsha pvt ltd",
+              description: "A Tea Packet",
+              image: "../images/lifeel-img.jpeg",
+              order_id: order.id,
+              handler: function (response) {
+                alert(response.razorpay_payment_id);
+                alert(response.razorpay_order_id);
+                alert(response.razorpay_signature);
+                console.log("Server side sign is", response.razorpay_signature);
+                fetch("/verifyRazorpayPayment", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(response),
+                })
+                  .then((verificationResponse) => verificationResponse.json())
+                  .then((result) => {
+                    if (result.status === "success") {
+                      alert(
+                        "Payment successful: " + response.razorpay_payment_id
+                      );
+                      alert(response.razorpay_order_id);
+                      alert(response.razorpay_signature);
+                    } else {
+                      alert("Payment failed");
+                      alert(response.error.code);
+                    }
+                  })
+                  .catch((error) => {
+                    console.error("Error verifying payment:", error);
+                  });
+              },
+            };
+
+            const rzp = new Razorpay(options);
+            rzp.open();
+          })
+          .catch((error) => {
+            console.error("Error creating order:", error);
+          });
+      }
+    </script>
+  </body>
+</html>

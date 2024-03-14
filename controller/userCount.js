@@ -5,4 +5,5 @@ async function userCount(){
         return data;
     })
 }
+
 module.exports = userCount;
