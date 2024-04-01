@@ -19,7 +19,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.2",
     "mongoose-unique-validator": "^5.0.0",
-    "razorpay": "^2.9.2",
-    "vercel": "^33.5.5"
+    "razorpay": "^2.9.2"
   }
 }
